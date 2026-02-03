@@ -1,0 +1,55 @@
+body {
+    width : 80%;
+    margin-left: 10%;
+    background-color: #EDF6FF;
+}
+p{
+    font-size: 20px;
+}
+form fieldset {
+    background-color: #6DAFFE;
+    border-radius: 20px;
+    border-color: #437FC7;
+}
+form fieldset h1 {
+    color: white;
+    font-size: 70px;
+    text-align: center;
+    font-style: oblique;
+}
+form h2 {
+    color: #B9732F;
+    font-weight: 900;
+    font-size: 40px;
+    background-color: rgb(255, 198, 198);
+    border-color: black;
+    border-radius: 20px;
+    padding-left: 5%;
+}
+form button {
+    background-color: #437FC7;
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    border-color: black;
+    border-width: 5%;
+}
+input {
+    border-color: #124687;
+    /* width: 100px;
+    height: 30px; */
+    border-radius: 20px;
+}
+textarea {
+    border-color: #124687;
+    border-radius: 20px;
+}
+legend {
+    font-size: 30px;
+    color: #002859;
+    font-weight: bolder;
+}
+fieldset input {
+    width: 90px;
+    height: 18px;
+}

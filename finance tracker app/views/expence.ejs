@@ -1,0 +1,201 @@
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <title>EXPENCE</title>
+      </head>
+
+      <body class="bg-gray-100">
+
+        <div class="flex min-h-screen">
+
+              <!-- Left Navigation -->
+          <div class="w-64 bg-gray-900 text-white px-6 py-8 flex flex-col">
+
+            <!-- Profile Section -->
+            <div class="flex flex-col items-center mb-10">
+              <img
+                class="h-20 w-20 rounded-full object-cover mb-3"
+                src="https://i.pinimg.com/236x/1d/27/4f/1d274fb2067ef14c6ba0dd4031120cf8.jpg"
+                alt="User"
+              />
+              <h1 class="text-lg font-semibold">@user_name</h1>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex flex-col space-y-4">
+              <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/home'">Home</button>
+              <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/income'">Income</button>
+              <button class="w-full border-2 border-white-500 bg-sky-500 text-white py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/expence'">Expences</button>
+              <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/calender'">Calendar</button>
+            </div>
+
+
+          </div>
+
+          <!-- Right Body -->
+          <main class="flex-1 px-8 py-6 space-y-8">
+
+            <!-- Top Actions -->
+            <div class="flex justify-between items-center">
+
+              <!-- Filter Dropdown -->
+              <div class="relative">
+                <button
+                  id="filterBtn"
+                  class="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                >
+                  Filter
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <div
+                  id="filterMenu"
+                  class="hidden absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg"
+                >
+                  <button class="dropdown-item" type="groups_groups">Groups</button>
+                  <button class="dropdown-item" type="monthly_expences">Monthly</button>
+                </div>
+              </div>
+
+              <!-- Add Expence -->
+              <button
+        class="bg-sky-500 text-white px-5 py-2 rounded-lg"
+        onclick="window.location.href='/transaction_page'"
+      >
+
+                Add Expense
+              </button>
+
+            </div>
+
+<!-- Expense List -->
+<% group_expence.forEach((group, index) => { %>
+  <section class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-lg font-semibold text-gray-800">
+        <%= group.ecategory %>
+      </h2>
+
+      <button
+        class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm"
+        type="button"
+        onclick="toggleExpence('<%= index %>')"
+      >
+        Edit
+      </button>
+    </div>
+
+    <!-- Group Summary -->
+    <div class="flex justify-between items-center border-b pb-3">
+      <span class="text-sm text-gray-500">Total</span>
+      <span class="font-semibold text-red-600">
+        - ₹<%= group.ecategory_total %>
+      </span>
+    </div>
+
+    <!-- Expense items (hidden by default) -->
+    <div id="expence-<%= index %>" class="space-y-2 hidden">
+      <% all_expence.forEach(exp => { %>
+        <% if (exp.ecategory === group.ecategory) { %>
+          <div class="flex gap-4">
+          <button
+            class="w-full bg-red-100 text-red-700 px-6 py-3 rounded-xl text-left font-medium"
+            type="button"
+          onclick="window.location.href='#'"
+            >
+            <div class="flex items-center justify-between">
+              <span>
+                <%= exp.etype %> —
+                <span class="font-semibold">₹<%= exp.eamount %></span>
+              </span>
+              <span class="text-sm text-gray-600"><%= exp.edate %></span>
+              <span class="text-sm text-gray-500"><%= exp.edescription %></span>
+            </div>
+          </button>
+<button
+  type="button"
+  class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition delete-expense"
+  data-id="<%= exp.id %>"
+>
+  Delete
+</button>
+
+          </div>
+        <% } %>
+      <% }) %>
+    </div>
+
+  </section>
+<% }) %>
+
+            </main>
+          </div>
+
+        <!-- JS for dropdown -->
+        <script>
+      const filterBtn = document.getElementById("filterBtn");
+      filterBtn.addEventListener("click", () => {
+        alert("Filter coming soon 😄");
+      });
+function toggleExpence(id) {
+  const section = document.getElementById(`expence-${id}`);
+  section.classList.toggle("hidden");
+}
+  document.querySelectorAll(".delete-expense").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      if (!id) return;
+
+      const ok = confirm("Delete this expense?");
+      if (!ok) return;
+
+      try {
+        const res = await fetch(`/transactions/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          location.reload();
+        } else {
+          alert("Delete failed");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Delete failed");
+      }
+    });
+  });
+        </script>
+
+        <!-- Tailwind utility styles -->
+        <style>
+          .nav-btn {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            color: #38bdf8;
+            transition: all 0.2s;
+          }
+          .nav-btn:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            border: 1px solid #38bdf8;
+          }
+          .dropdown-item {
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+          }
+          .dropdown-item:hover {
+            background-color: #f3f4f6;
+          }
+        </style>
+
+      </body>
+      </html>

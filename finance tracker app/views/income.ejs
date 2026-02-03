@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>INCOME</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <!-- Left Navigation -->
+      <div class="w-64 bg-gray-900 text-white px-6 py-8 flex flex-col">
+        <!-- Profile Section -->
+        <div class="flex flex-col items-center mb-10">
+          <img
+            class="h-20 w-20 rounded-full object-cover mb-3"
+            src="https://i.pinimg.com/236x/1d/27/4f/1d274fb2067ef14c6ba0dd4031120cf8.jpg"
+            alt="User"
+          />
+          <h1 class="text-lg font-semibold">@user_name</h1>
+        </div>
+
+        <!-- Navigation Buttons -->
+      <div class="flex flex-col space-y-4">
+        <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/home'">Home</button>
+        <button class="w-full border-2 border-white-500 bg-sky-500 text-white py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/income'">Income</button>
+        <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/expence'">Expenses</button>
+        <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/calender'">Calendar</button>
+      </div>
+      </div>
+
+      <!-- Right Body -->
+      <main class="flex-1 px-8 py-6 space-y-8">
+        <!-- Top Actions -->
+        <div class="flex justify-between items-center">
+          <button id="filterBtn" class="bg-gray-800 text-white px-4 py-2 rounded-lg">
+            Filter
+          </button>
+
+          <button
+            class="bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg"
+            onclick="window.location.href='/transaction_page'"
+          >
+            Add Income
+          </button>
+        </div>
+
+        <!-- ✅ NEW INCOME SECTION (CATEGORY → SUMMARY → LIST) -->
+        <% group_income.forEach((group, index) => { %>
+  <section class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-lg font-semibold text-gray-800">
+        <%= group.category %>
+      </h2>
+
+      <button
+        class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm"
+        type="button"
+        onclick="toggleIncome('<%= index %>')"
+      >
+        Edit
+      </button>
+    </div>
+
+    <!-- Group Summary -->
+    <div class="flex justify-between items-center border-b pb-3">
+      <span class="text-sm text-gray-500">Total</span>
+      <span class="font-semibold text-green-600">
+        + ₹<%= group.category_total %>
+      </span>
+    </div>
+
+    <!-- Income List (hidden by default) -->
+    <div id="income-<%= index %>" class="space-y-2 hidden">
+      <% all_income.forEach(income => { %>
+        <% if (income.category === group.category) { %>
+              <div class="flex gap-4">
+          <button
+            class="w-full bg-green-100 hover:bg-green-300 text-green-900 px-6 py-3 rounded-xl text-left font-medium"
+            type="button"
+          >
+            <div class="flex items-center justify-between">
+              <span>
+                <%= income.type %> —
+                <span class="font-semibold">₹<%= income.amount %></span>
+              </span>
+              <span class="text-sm text-gray-600"><%= income.date %></span>
+              <span class="text-sm text-gray-500"><%= income.description %></span>
+            </div>
+          </button>
+<button
+  type="button"
+  class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition delete-income"
+  data-id="<%= income.id %>"
+>
+  Delete
+</button>
+          </div>
+        <% } %>
+      <% }) %>
+    </div>
+
+  </section>
+<% }) %>
+
+      </main>
+    </div>
+
+<script>
+  const filterBtn = document.getElementById("filterBtn");
+  filterBtn.addEventListener("click", () => {
+    alert("Filter coming soon 😄");
+  });
+
+  function toggleIncome(id) {
+    const section = document.getElementById(`income-${id}`);
+    section.classList.toggle("hidden");
+  }
+
+  document.querySelectorAll(".delete-income").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      if (!id) return;
+
+      const ok = confirm("Delete this income?");
+      if (!ok) return;
+
+      try {
+        const res = await fetch(`/transactions/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          location.reload();
+        } else {
+          alert("Delete failed");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Delete failed");
+      }
+    });
+  });
+</script>
+
+  </body>
+</html>

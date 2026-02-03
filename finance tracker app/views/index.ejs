@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>HOME</title>
+
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex min-h-screen">
+
+    <!-- Left Navigation -->
+    <div class="w-64 bg-gray-900 text-white px-6 py-8 flex flex-col">
+
+      <!-- Profile Section -->
+      <div class="flex flex-col items-center mb-10">
+        <img
+          class="h-20 w-20 rounded-full object-cover mb-3"
+          src="https://i.pinimg.com/236x/1d/27/4f/1d274fb2067ef14c6ba0dd4031120cf8.jpg"
+          alt="User"
+        />
+        <h1 class="text-lg font-semibold">@user_name</h1>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex flex-col space-y-4">
+        <button class="w-full border-2 border-white-500 bg-sky-500 text-white py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/home'">Home</button>
+        <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/income'">Income</button>
+        <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/expence'">Expenses</button>
+        <button class="w-full hover:border-1 border-sky-500 text-sky py-2 px-4 rounded-full text-center transition" onclick="window.location.href='/calender'">Calendar</button>
+      </div>
+
+
+    </div>
+
+    <!-- Right Body -->
+<div class="flex-1 bg-gray-100 px-8 py-6 space-y-8">
+
+  <!-- Page Header
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-semibold text-gray-800">
+      Dashboard
+    </h1>
+  </div> -->
+
+  <!-- Recent Transactions -->
+<div class="bg-white rounded-xl shadow-sm p-6">
+  <h2 class="text-lg font-semibold text-gray-800 mb-4">
+    Recent Transactions
+  </h2>
+
+  <div class="space-y-3 text-gray-600">
+    <% if (recent_transactions && recent_transactions.length > 0) { %>
+      <% recent_transactions.forEach((t) => { %>
+        <div class="flex justify-between">
+          <span><%= t.transaction_name %></span>
+
+          <span
+            class="font-medium
+              <%= t.total_amo < 0 ? 'text-red-500' : 'text-green-500' %>">
+            <%= t.total_amo < 0 ? '-' : '+' %> ₹<%= Math.abs(t.total_amo) %>
+          </span>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="text-sm text-gray-400">No recent transactions</p>
+    <% } %>
+  </div>
+</div>
+
+  <!-- Quick Access -->
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+      Quick Access
+    </h2>
+
+    <div class="flex gap-4">
+      <button class="bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg transition" type="add" onclick="window.location.href='/transaction_page'">
+        Add
+      </button>
+      <!-- <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg transition" type="edit">
+        Edit    // we have to think about this logic
+      </button> -->
+      <button class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition" type="Delete" onclick="window.location.href='/expence'">
+        Delete Expense
+      </button>
+      <button class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition" type="Delete" onclick="window.location.href='/income'">
+        Delete Income
+      </button>
+    </div>
+  </div>
+
+  <!-- Monthly Report -->
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+      All Transaction Report
+    </h2>
+
+    <div class="space-y-3 text-gray-600">
+      <div class="flex justify-between">
+        <span>Income</span>
+        <span class="font-medium text-green-500">+ ₹<%= total_income %></span>
+      </div>
+      <div class="flex justify-between">
+        <span>Expences</span>
+        <span class="font-medium text-red-500">- ₹<%= total_expense %></span>
+    </div>
+  </div>
+
+</div>
+
+
+  </div>
+
+</body>
+</html>

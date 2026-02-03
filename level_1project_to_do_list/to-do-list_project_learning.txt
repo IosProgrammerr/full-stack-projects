@@ -1,0 +1,24 @@
+learning - 1
+
+var nme = document.getElementById("user_name");
+var task = document.getElementById("user_task");
+var imp = document.getElementById("impt_task");
+lst = {
+    d : [],
+    t : [],
+    i : []
+}
+
+imp.addEventListener("click",Add_imp);<--|  event listner need second argument which is our function name 
+function Add_imp() {---------------------|
+    lst.i.push(task.value)  <---------> this [value] pushes in lst{object}-->i[array] of <input> only task will store the place holder value.
+    console.log(lst)
+}
+
+
+learning - 2
+all_task_output.innerHTML = lst.i.map(i => ` 🔴 Important Task --> ${i}`).join("<br>");
+This line converts each important task in the array into formatted HTML text using map() and displays all tasks at once in the DOM using join("<br>").
+
+learning - 3
+

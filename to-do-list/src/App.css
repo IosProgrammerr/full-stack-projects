@@ -1,0 +1,84 @@
+body {
+    background-color: #4988C4;
+}
+.to-do-cont {
+    background-color: #0F2854;
+    border-radius: 30px;
+    border: 5px solid #BDE8F5;
+    padding: 20px;
+    height: 500px;
+    width: 80%;
+    box-shadow: 0 10px 200px #0F2854;
+}
+.hdng {
+    color:#BDE8F5;
+    font-family: serif; 
+}
+.inpt {
+  background-color: #0F2854 !important;
+  color: #BDE8F5 !important;
+  border: 2px solid #BDE8F5;
+  box-shadow: 5px 5px 20px #1C4D8D;
+}
+
+.inpt:focus {
+  background-color: hsl(218, 70%, 19%) !important;
+  color: #BDE8F5 !important;
+  border-color: #BDE8F5;
+  box-shadow: 0 0 0 0.2rem #4988C4;
+}
+.todo-item {
+  background-color: #0F2854 !important;
+  color: #BDE8F5 !important;
+  border: 2px solid #BDE8F5;
+  box-shadow: 5px 5px 20px #1C4D8D;
+}
+
+.todo-item:hover {
+  background-color: #163b7a !important;
+}
+.todo-item span {
+  color: #BDE8F5;
+}
+/* Smooth animations everywhere */
+* {
+  transition: all 0.25s ease-in-out;
+}
+
+/* Scrollable task list */
+.task-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Custom scrollbar (optional but cool) */
+.task-list::-webkit-scrollbar {
+  width: 6px;
+}
+.task-list::-webkit-scrollbar-thumb {
+  background-color: #BDE8F5;
+  border-radius: 10px;
+}
+
+/* Completed task style */
+.task-done {
+  color: red !important;
+  text-decoration: line-through;
+}
+
+/* Button hover polish */
+.btn-success:hover,
+.btn-danger:hover,
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Empty state centering */
+.todo-item p {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  opacity: 0.8;
+}
